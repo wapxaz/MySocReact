@@ -1,0 +1,30 @@
+.message {}
+
+.left {
+    display: flex;
+    align-items: center;
+}
+
+.left::before {
+    content: '';
+    width: .5em;
+    height: .5em;
+    border-radius: 1em;
+    background-color: #20ff87;
+    margin-right: .5em;
+}
+
+.right {
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+}
+
+.right::after {
+    content: '';
+    width: .5em;
+    height: .5em;
+    border-radius: 1em;
+    background-color: #20ff87;
+    margin-right: .5em;
+}
