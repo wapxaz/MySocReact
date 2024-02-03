@@ -31,7 +31,9 @@ class UsersContainer extends React.Component {
         }
         return (
             <>
-                <Preloader isFetching={this.props.isFetching} />
+                <div>
+                    {this.props.isFetching ? <Preloader /> : null}
+                </div>
                 <Users totalUsersCount={this.props.totalUsersCount}
                     pageSize={this.props.pageSize}
                     users={this.props.users}
