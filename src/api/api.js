@@ -14,20 +14,34 @@ export const usersAPI = {
             return response.data
         });
     },
-    getProfile(profileId = null)  {
-        return instance.get(`profile/${profileId}`).then(response => {
-            return response.data
-        });
-    },
-    isAuth() {
-        return instance.get(`auth/me`).then(response => {
-            return response.data
-        });
-    },
     follow(user_id) {
         return instance.post(`follow/${user_id}`);
     },
     unfollow(user_id) {
         return instance.delete(`follow/${user_id}`);
+    }
+}
+
+export const profileAPI = {
+    getProfile(profileId = null) {
+        return instance.get(`profile/${profileId}`).then(response => {
+            return response.data
+        });
+    },
+    getStatus(userId = 2) {
+        return instance.get(`profile/status/` + userId).then(response => {
+            return response.data;
+        });
+    },
+    updateStatus(status) {
+        return instance.put(`profile/status/`, { status: status })
+    }
+}
+
+export const authAPI = {
+    me() {
+        return instance.get(`auth/me`).then(response => {
+            return response.data;
+        });
     }
 }

@@ -21,7 +21,7 @@ const ProfileInfo = (props) => {
         <div className={s.fullName}>{props.profile.fullName}</div>
         <div>Looking for a job: {props.profile.lookingForAJob ? 'Yes' : 'No'}</div>
 
-        <ProfileStatus status={props.profile.lookingForAJobDescription} />
+        <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
 
         {(props.profile.contacts.github 
         || props.profile.contacts.vk
