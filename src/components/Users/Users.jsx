@@ -11,11 +11,6 @@ let Users = (props) => {
         pages.push(i);
     }
 
-    if(!props.isAuth)
-    {
-        return <Navigate to={"/login"} />
-    }
-
     return (
         <div>
             <div>
