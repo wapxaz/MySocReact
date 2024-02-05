@@ -1,8 +1,7 @@
 import React from "react";
 import style from "./Users.module.css";
 import userPhoto from "../../assets/images/avatar_default.png";
-import { NavLink } from "react-router-dom";
-import { usersAPI } from "../../api/api";
+import { NavLink, Navigate } from "react-router-dom";
 
 let Users = (props) => {
 
@@ -10,6 +9,11 @@ let Users = (props) => {
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
+    }
+
+    if(!props.isAuth)
+    {
+        return <Navigate to={"/login"} />
     }
 
     return (

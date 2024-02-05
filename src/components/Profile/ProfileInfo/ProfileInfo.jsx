@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
+import defaultAvatar from '../../../assets/images/avatar_default.png';
 
 const ProfileInfo = (props) => {
   if (!props.profile) {
@@ -13,7 +14,9 @@ const ProfileInfo = (props) => {
         <img src="https://media.istockphoto.com/id/1370813651/ru/фото/доска-для-серфинга-и-пальма-на-пляже-летом.jpg?s=612x612&w=0&k=20&c=aenv9jHp7T2KuUDsFh-Sf3cg6bVVWN9TKdWssXWK7Sw=" />
       </div>
       <div className={s.descriptionBlock}>
-        <div><img src={props.profile.photos.large} /></div>
+        <div className={s.profileAvatar}><img src={props.profile.photos.large
+                      ? props.profile.photos.large
+                      : defaultAvatar} /></div>
         <div className={s.fullName}>{props.profile.fullName}</div>
         <div>Looking for a job: {props.profile.lookingForAJob ? 'Yes' : 'No'}</div>
         {props.profile.lookingForAJobDescription !== null ? <div>{props.profile.lookingForAJobDescription}</div> : ''}
