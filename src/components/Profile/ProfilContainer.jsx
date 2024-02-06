@@ -26,11 +26,11 @@ function withRouter(Component) {
 class ProfileContainer extends React.Component {
   componentDidMount() {
     let profileId = this.props.router.params.profileId;
-    if(this.props.isAuth && this.props.currentUserId)
+    if(!profileId && this.props.isAuth && this.props.currentUserId)
     {
       profileId = this.props.currentUserId;
 
-    }else if (!profileId) {
+    }else if(!profileId) {
       profileId = 2;
     }
     this.props.getProfile(profileId);
