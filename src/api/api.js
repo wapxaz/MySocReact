@@ -40,8 +40,12 @@ export const profileAPI = {
 
 export const authAPI = {
     me() {
-        return instance.get(`auth/me`).then(response => {
-            return response.data;
-        });
+        return instance.get(`auth/me`).then(response => {return response.data;});
+    },
+    login(email, password, rememberMe, capcha) {
+        return instance.post(`auth/login/`, { email, password, rememberMe, capcha }).then(response => {return response.data;});
+    },
+    logout() {
+        return instance.delete(`auth/login/`).then(response => {return response.data;});
     }
 }
