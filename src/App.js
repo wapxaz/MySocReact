@@ -10,7 +10,7 @@ import React, { Suspense } from 'react';
 import { initializeApp } from './redux/app-reducer';
 import { connect } from 'react-redux';
 import Preloader from './components/common/Preloader/Preloader';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/redux-store.js';
 
@@ -60,11 +60,11 @@ const mapStateToProps = (state) => ({
 const AppContainer = connect(mapStateToProps, { initializeApp })(App);
 
 const AppMain = (props) => {
-  return <BrowserRouter basename={process.env.PUBLIC_URL}>
+  return <HashRouter basename={process.env.PUBLIC_URL}>
     <Provider store={store}>
       <AppContainer />
     </Provider>
-  </BrowserRouter>
+  </HashRouter>
 }
 
 export default AppMain;
