@@ -1,4 +1,4 @@
-const ADD_MESSAGE = 'ADD-MESSAGE';
+const ADD_MESSAGE = 'social-network/dialog/ADD-MESSAGE';
 
 //стартовые данные
 let initialState = {

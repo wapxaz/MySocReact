@@ -7,9 +7,9 @@ import {login} from '../../redux/auth-reducer';
 import { Navigate } from 'react-router-dom';
 import s from '../common/FormsControls/FormsControls.module.css';
 
-const LoginForm = (props) => {
+const LoginForm = ({handleSubmit, error}) => {
     return (
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <Field component={Input} name="email" placeholder="Email" validate={[required]} />
                 </div>
@@ -22,8 +22,8 @@ const LoginForm = (props) => {
                 {/* <div>
                     <Field component="input" name="captcha" /> Тут капча
                 </div> */}
-                {props.error && <div className={s.formSummaryError}>
-                    {props.error}
+                {error && <div className={s.formSummaryError}>
+                    {error}
                 </div>}
                 <div>
                     <button>Login</button>

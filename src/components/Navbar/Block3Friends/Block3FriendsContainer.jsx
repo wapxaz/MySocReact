@@ -1,5 +1,4 @@
 import React from 'react';
-import Friend from './Friend/Friend';
 import { connect } from 'react-redux';
 import Block3Friends from './Block3Friends';
 
