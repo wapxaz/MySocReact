@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/MySocReact/static/css/main.f633b5d2.css",
-    "main.js": "/MySocReact/static/js/main.e78e4d52.js",
+    "main.js": "/MySocReact/static/js/main.78a27fcb.js",
     "static/css/856.9694559d.chunk.css": "/MySocReact/static/css/856.9694559d.chunk.css",
     "static/js/856.7f113ba1.chunk.js": "/MySocReact/static/js/856.7f113ba1.chunk.js",
     "static/css/752.c2030993.chunk.css": "/MySocReact/static/css/752.c2030993.chunk.css",
@@ -13,7 +13,7 @@
     "static/media/avatar_default.png": "/MySocReact/static/media/avatar_default.99b08e94f781d8d8eef4.png",
     "index.html": "/MySocReact/index.html",
     "main.f633b5d2.css.map": "/MySocReact/static/css/main.f633b5d2.css.map",
-    "main.e78e4d52.js.map": "/MySocReact/static/js/main.e78e4d52.js.map",
+    "main.78a27fcb.js.map": "/MySocReact/static/js/main.78a27fcb.js.map",
     "856.9694559d.chunk.css.map": "/MySocReact/static/css/856.9694559d.chunk.css.map",
     "856.7f113ba1.chunk.js.map": "/MySocReact/static/js/856.7f113ba1.chunk.js.map",
     "752.c2030993.chunk.css.map": "/MySocReact/static/css/752.c2030993.chunk.css.map",
@@ -24,6 +24,6 @@
   },
   "entrypoints": [
     "static/css/main.f633b5d2.css",
-    "static/js/main.e78e4d52.js"
+    "static/js/main.78a27fcb.js"
   ]
 }
