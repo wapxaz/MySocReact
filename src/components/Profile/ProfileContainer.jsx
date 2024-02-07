@@ -24,7 +24,8 @@ function withRouter(Component) {
 }
 
 class ProfileContainer extends React.Component {
-  componentDidMount() {
+
+  refreshProfile() {
     let profileId = this.props.router.params.profileId;
     if(!profileId)
     {
@@ -38,6 +39,18 @@ class ProfileContainer extends React.Component {
     this.props.getProfile(profileId);
     this.props.getStatus(profileId);
   }
+
+  componentDidMount() {
+    this.refreshProfile();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(this.props.router.params.profileId != prevProps.router.params.profileId)
+    {
+      this.refreshProfile();
+    }
+  }
+
   render() {
     return (
       <div>
