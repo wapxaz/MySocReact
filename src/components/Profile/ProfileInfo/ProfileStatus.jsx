@@ -1,5 +1,7 @@
 import React from 'react';
 
+// статься по тестам - https://www.valentinog.com/blog/testing-react/
+
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
