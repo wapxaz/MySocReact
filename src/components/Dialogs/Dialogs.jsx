@@ -6,6 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import { TextArea } from '../common/FormsControls/FormsControls';
 import { maxLengthCreator, required } from '../../utils/validators/validators';
 
+//форма для добавления нового сообщения
 const AddNewMessage = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
@@ -22,6 +23,7 @@ const AddNewMessage = (props) => {
 const AddNewMessageReduxForm = reduxForm({ form: 'addNewMessageForm' })(AddNewMessage);
 
 const Dialogs = (props) => {
+    //оборачиваю данные из массивов в компоненты и далее отрисовываю их
     let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} img={d.img} />);
     let messageselements = props.dialogsPage.messages.map(m => <Message message={m.message} key={m.id} id={m.id} />);
 

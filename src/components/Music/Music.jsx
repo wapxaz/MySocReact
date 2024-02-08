@@ -3,6 +3,7 @@ import s from "./Music.module.css";
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
+//страница с музыкой - в разработке 
 const Music = () => {
     return (
         <div>

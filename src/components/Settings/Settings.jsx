@@ -3,6 +3,7 @@ import s from "./Settings.module.css";
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
+//страница настроек - в разработке 
 const Settings = () => {
     return (
         <div>

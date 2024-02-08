@@ -1,6 +1,7 @@
 import React from 'react';
 import s from './Post.module.css';
 
+//отрисовка одного поста
 const Post = (props) => {
   return (
     <div className={s.item}>

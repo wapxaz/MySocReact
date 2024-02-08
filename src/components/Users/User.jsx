@@ -3,6 +3,7 @@ import style from "./Users.module.css";
 import userPhoto from "../../assets/images/avatar_default.png";
 import { NavLink } from "react-router-dom";
 
+//разметка для одного пользователя
 let User = ({user, followingInProgress, unfollow, follow}) => {
     return (
         <div>
@@ -22,10 +23,6 @@ let User = ({user, followingInProgress, unfollow, follow}) => {
                 <span>
                     <div>{user.name}</div>
                     <div>{user.status}</div>
-                </span>
-                <span>
-                    <div>{"user.location.country"},</div>
-                    <div>{"user.location.city"}</div>
                 </span>
             </span>
         </div>

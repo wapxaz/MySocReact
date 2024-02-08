@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 
+//редирект на страницу авторизации
 export const withAuthRedirect = (Component) => {
     class RedirectComponent extends React.Component {
         render() {

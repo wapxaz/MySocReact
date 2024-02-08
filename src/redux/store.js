@@ -2,6 +2,9 @@ import profileReducer from "./profile-reducer.js";
 import dialogReducer from "./dialog-reducer.js";
 import sidebarReducer from "./sidebar-reducer.js";
 
+//самописный store REDUX - по нему изучал, как всё устроено
+//сейчас не используется
+
 let store = {
     _state: {
         profilePage: {

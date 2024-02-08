@@ -9,6 +9,8 @@ import { reducer as formReducer } from 'redux-form';
 import appReducer from "./app-reducer.js";
 import { compose } from "redux";
 
+//файл настроек store REDUX
+
 let reducers = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogReducer,

@@ -1,5 +1,8 @@
 import { createSelector } from "reselect";
 
+//селекторы из mapStateToProps вынесены в отдельный файл
+//из файла UsersContainer.jsx
+
 const getUsersSelectorTmp = (state) => {
     return state.usersPage.users;
 }

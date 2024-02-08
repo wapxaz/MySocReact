@@ -131,7 +131,7 @@ export const saveProfile = (profileData) => async (dispatch, getState) => {
         }));
         */
 
-        return false;//Promise.reject(response.data.messages[0]);
+        return false;
     }
 }
 

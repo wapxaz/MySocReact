@@ -7,6 +7,7 @@ import { login } from '../../redux/auth-reducer';
 import { Navigate } from 'react-router-dom';
 import s from '../common/FormsControls/FormsControls.module.css';
 
+//форма авторизации на сайте
 const LoginForm = ({ handleSubmit, error, captchaUrl }) => {
     return (
         <form onSubmit={handleSubmit}>

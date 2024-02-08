@@ -1,3 +1,5 @@
+//правила валидации форм
+
 export const required = value => {
     if(value) return undefined;
 

@@ -9,7 +9,6 @@ let initialState = {
 };
 
 const appReducer = (state = initialState, action) => {
-
     switch (action.type) {
         case INITIALIZED_SUCCESS: {
             return {
@@ -24,6 +23,7 @@ const appReducer = (state = initialState, action) => {
 
 export const initializedSuccess = () => ({ type: INITIALIZED_SUCCESS })
 
+//ставит флар true для initialized, когда приложение проинициализировано
 export const initializeApp = () => (dispatch) => {
     let promise = dispatch(getAuthUserData());
     promise.then(() => {

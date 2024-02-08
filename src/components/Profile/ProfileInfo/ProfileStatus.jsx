@@ -1,7 +1,7 @@
 import React from 'react';
 
-// статься по тестам - https://www.valentinog.com/blog/testing-react/
-
+//редактирование статуса пользователя при даблклике
+//реализация классовую компоненту с локальным стейтом
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
@@ -35,14 +35,16 @@ class ProfileStatus extends React.Component {
 
     render() {
         return (<div>
-            {!this.state.editMode &&
+            {//режим отображения статуса
+            !this.state.editMode &&
                 <div>
                     <span onDoubleClick={this.activateEditMode}>
                         {this.props.status || "-----"}
                     </span>
                 </div>
             }
-            {this.state.editMode &&
+            {//режим редактирования статуса
+            this.state.editMode &&
                 <div>
                     <input autoFocus={true} value={this.state.status} onChange={this.onStatusChange} onBlur={this.deactivateEditMode} />
                 </div>

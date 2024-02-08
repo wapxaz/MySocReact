@@ -83,6 +83,7 @@ export const getUsers = (currentPage, pageSize) => async (dispatch) => {
     dispatch(setUsersTotalCounts(data.totalCount));
 }
 
+//вынесена общая логика ф-ций follow и unfollow
 const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {
     dispatch(toggleFollowingInProgress(true, userId));
     let response = await apiMethod(userId);

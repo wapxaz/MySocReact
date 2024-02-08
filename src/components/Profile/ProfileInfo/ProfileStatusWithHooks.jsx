@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+//редактирование статуса пользователя при даблклике
+//реализация через хуки
 const ProfileStatusWithHooks = (props) => {
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
@@ -22,14 +24,16 @@ const ProfileStatusWithHooks = (props) => {
     }
 
     return (<div>
-        {!editMode &&
+        {//режим отображения статуса
+        !editMode &&
             <div>
                 <span onDoubleClick={activateEditMode}>
                 Status: {props.status || "-----"}
                 </span>
             </div>
         }
-        {editMode &&
+        {//режим редактирования статуса
+        editMode &&
             <div>
                 Status: <input value={status} onBlur={deactivateEditMode} onChange={onStatusChange} autoFocus={true} />
             </div>

@@ -16,7 +16,7 @@ class UsersContainer extends React.Component {
         this.props.setCurrentPage(currentPage);
     }
     render() {
-
+        //вычисление кол-ва страниц пользователей
         let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
         let pages = [];
         for (let i = 1; i <= pagesCount; i++) {

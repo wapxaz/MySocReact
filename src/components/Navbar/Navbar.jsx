@@ -3,6 +3,7 @@ import s from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
 import Block3FriendsContainer from './Block3Friends/Block3FriendsContainer';
 
+//левое меню
 const Navbar = (props) => {
   return (
     <nav className={s.nav}>

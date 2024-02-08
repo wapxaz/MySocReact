@@ -5,6 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import { required, maxLengthCreator } from '../../../utils/validators/validators';
 import { TextArea } from '../../common/FormsControls/FormsControls';
 
+//форма добавления нового поста в ленту
 const AddNewPostForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -20,6 +21,7 @@ const AddNewPostForm = (props) => {
 
 const NewPostReduxForm = reduxForm({ form: 'addNewPostForm' })(AddNewPostForm);
 
+//React.memo - оптимизация отрисовки, аналог PureComponent в классовой компоненте
 const MyPosts = React.memo((props) => {
 
   let postsElements = [...props.posts].reverse().map(p => <Post key={p.id} message={p.post} likeCount={p.likeCount} />);

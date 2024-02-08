@@ -1,5 +1,8 @@
 import axios from "axios";
 
+//API для работы с данными в соцсети
+//уровень DAL
+
 const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',

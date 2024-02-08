@@ -9,7 +9,7 @@ import ProfileDataForm from './ProfileDataForm';
 import Contact from './Contact';
 
 const ProfileInfo = (props) => {
-  let [editMode, setEditMode] = useState(false);
+  let [editMode, setEditMode] = useState(false); //хук переключатель режима редактирования данных пользователя
 
   const onSubmit = (formData) => {
     props.saveProfile(formData)
@@ -39,7 +39,8 @@ const ProfileInfo = (props) => {
             : defaultAvatar} />
           {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
         </div>
-        {editMode
+        {//переключатель режима редактирования данных пользователя
+        editMode
           ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
           : <ProfileData profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} goToEditMode={() => { setEditMode(true) }} />}
 
@@ -65,7 +66,8 @@ const ProfileData = (props) => {
       <b>About me:</b> {props.profile.aboutMe}
     </div>}
 
-    {(props.profile.contacts.github
+    {//если заполнена хоть одна строчка контактов, выводится строка "Contacts"
+    (props.profile.contacts.github
       || props.profile.contacts.vk
       || props.profile.contacts.facebook
       || props.profile.contacts.instagram
@@ -76,7 +78,8 @@ const ProfileData = (props) => {
       ? <div><b>Contacts:</b></div>
       : ''}
 
-    {Object.keys(props.profile.contacts).map(key => {
+    {//возвращает массив ключей и проходится по каждому через ф-ю map, которая возвращает разметку для каждой строчки контактов пользователя(его соцсетей)
+    Object.keys(props.profile.contacts).map(key => {
       return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
     })}
 

@@ -2,6 +2,8 @@ import React from "react";
 import { create } from "react-test-renderer";
 import ProfileStatus from "./ProfileStatus";
 
+// статься по тестам - https://www.valentinog.com/blog/testing-react/
+
 describe("ProfileStatus component", () => {
     test("status from props should be in te state", () => {
         const component = create(<ProfileStatus status="TestData1" />);

@@ -3,6 +3,7 @@ import s from './ProfileInfo.module.css';
 import s_form from '../../common/FormsControls/FormsControls.module.css';
 import { Field, reduxForm } from 'redux-form';
 
+//форма редактирования данных пользователя(только своего авторизованного)
 const ProfileDataFormRedux = ({ handleSubmit, profile, error }) => {
   return <form onSubmit={handleSubmit}>
     <div className={s.fullName}>
@@ -21,11 +22,13 @@ const ProfileDataFormRedux = ({ handleSubmit, profile, error }) => {
 
     <div><b>Contacts:</b></div>
 
-    {Object.keys(profile.contacts).map(key => {
+    {//возвращает массив ключей и проходится по каждому через ф-ю map, которая возвращает разметку для каждой строчки контактов пользователя(его соцсетей)
+    Object.keys(profile.contacts).map(key => {
       return <div key={key} className={s.contact}><b>{key}:</b> <Field name={'contacts.' + key} component="input" type="text" placeholder={key} /></div>
     })}
 
-    {error && <div className={s_form.formSummaryError}>
+    {//если есть ошибки в форме, выводится блок с информацией ошибки
+    error && <div className={s_form.formSummaryError}>
       {error}
     </div>}
 
