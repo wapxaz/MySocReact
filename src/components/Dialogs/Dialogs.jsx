@@ -6,7 +6,7 @@ import { Field, reduxForm } from 'redux-form';
 import { TextArea } from '../common/FormsControls/FormsControls';
 import { maxLengthCreator, required } from '../../utils/validators/validators';
 
-//форма для добавления нового сообщения
+// для добавления нового сообщения
 const AddNewMessage = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
