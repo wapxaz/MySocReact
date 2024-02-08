@@ -3,7 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 import News from './components/News/News';
 import Music from './components/Music/Music';
 import Settings from './components/Settings/Settings';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
 import React, { Suspense } from 'react';
@@ -37,6 +37,7 @@ class App extends React.Component {
           <div className='app-wrapper-content'>
             <Suspense fallback={<div><Preloader /></div>}>
               <Routes>
+                <Route exact path='/' element={<Navigate to="/profile" />} />
                 <Route path='/dialogs/*' element={<DialogsContainer />} />
                 <Route path='/profile/:profileId?' element={<ProfileContainer />} />
                 <Route path='/users' element={<UsersContainer />} />
