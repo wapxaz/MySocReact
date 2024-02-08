@@ -14,7 +14,7 @@ import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/redux-store.js';
 
-//ленивая подгрузка js для страниц ниже
+//ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 //import ProfileContainer from './components/Profile/ProfileContainer';
@@ -44,6 +44,7 @@ class App extends React.Component {
                 <Route path='/music' element={<Music />} />
                 <Route path='/settings' element={<Settings />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='*' element={<div>404 NOT FOUND</div>} />
               </Routes>
             </Suspense>
           </div>
