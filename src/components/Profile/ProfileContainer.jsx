@@ -9,19 +9,36 @@ import { withRouter } from '../../hoc/withRouter';
 
 class ProfileContainer extends React.Component {
 
+  //локальный стейт для редиректа на страницу логина, когда не авторизованы и не настранице конеретного пользователя
+  state = {
+    isRedirectRoLogin: false
+  }
+
+  activateRedirectToLogin = () => {
+    this.setState({
+      isRedirectRoLogin: true
+    });
+  }
+
+  deactivateRedirectToLogin = () => {
+    this.setState({
+      isRedirectRoLogin: false
+    });
+  }
+
   refreshProfile() {
     let profileId = this.props.router.params.profileId;
     if (!profileId) {
       profileId = this.props.currentUserId;
       if (!profileId) {
-        return;
-        //window.location.replace("/login");
-        //return <Navigate to={"/login"} />;
+        this.activateRedirectToLogin();
       }
 
     }
-    this.props.getProfile(profileId);
-    this.props.getStatus(profileId);
+    if (profileId) {
+      this.props.getProfile(profileId);
+      this.props.getStatus(profileId);
+    }
   }
 
   componentDidMount() {
@@ -35,17 +52,23 @@ class ProfileContainer extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <Profile {...this.props}
-          isOwner={!this.props.router.params.profileId}
-          profile={this.props.profile}
-          status={this.props.status}
-          updateStatus={this.props.updateStatus}
-          savePhoto={this.props.savePhoto}
-          saveProfile={this.props.saveProfile} />
-      </div>
-    );
+    //редирект на страницу логина
+    if (this.state.isRedirectRoLogin) {
+      this.deactivateRedirectToLogin();
+      return <Navigate to={"/login"} />;
+    } else {
+      return (
+        <div>
+          <Profile {...this.props}
+            isOwner={!this.props.router.params.profileId}
+            profile={this.props.profile}
+            status={this.props.status}
+            updateStatus={this.props.updateStatus}
+            savePhoto={this.props.savePhoto}
+            saveProfile={this.props.saveProfile} />
+        </div>
+      );
+    }
   }
 }
 
