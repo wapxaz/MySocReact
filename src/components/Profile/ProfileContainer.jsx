@@ -14,8 +14,9 @@ class ProfileContainer extends React.Component {
     if (!profileId) {
       profileId = this.props.currentUserId;
       if (!profileId) {
-        window.location.replace("/login");
-        //return <Navigate to={"/login"} />
+        return;
+        //window.location.replace("/login");
+        //return <Navigate to={"/login"} />;
       }
 
     }
@@ -37,12 +38,12 @@ class ProfileContainer extends React.Component {
     return (
       <div>
         <Profile {...this.props}
-            isOwner={!this.props.router.params.profileId}
-            profile={this.props.profile}
-            status={this.props.status}
-            updateStatus={this.props.updateStatus}
-            savePhoto={this.props.savePhoto}
-            saveProfile={this.props.saveProfile} />
+          isOwner={!this.props.router.params.profileId}
+          profile={this.props.profile}
+          status={this.props.status}
+          updateStatus={this.props.updateStatus}
+          savePhoto={this.props.savePhoto}
+          saveProfile={this.props.saveProfile} />
       </div>
     );
   }

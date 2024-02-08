@@ -13,12 +13,11 @@ const ProfileInfo = (props) => {
 
   const onSubmit = (formData) => {
     props.saveProfile(formData)
-    .then((result) => {
-      if(result != false)
-      {
-        setEditMode(false);
-      }
-    });
+      .then((result) => {
+        if (result != false) {
+          setEditMode(false);
+        }
+      });
   }
 
   const onMainPhotoSelected = (e) => {
@@ -40,9 +39,9 @@ const ProfileInfo = (props) => {
             : defaultAvatar} />
           {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
         </div>
-        { editMode
-          ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} /> 
-          : <ProfileData profile={props.profile} isOwner={props.isOwner} goToEditMode={() => {setEditMode(true)}} />}
+        {editMode
+          ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
+          : <ProfileData profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} goToEditMode={() => { setEditMode(true) }} />}
 
       </div>
     </div>
@@ -57,11 +56,10 @@ const ProfileData = (props) => {
       </div>
     }
     <div className={s.fullName}>{props.profile.fullName}</div>
+    <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
     <div><b>Looking for a job:</b> {props.profile.lookingForAJob ? 'Yes' : 'No'}</div>
     {props.profile.lookingForAJobDescription &&
       <div><b>My professionl skils:</b> {props.profile.lookingForAJobDescription}</div>}
-
-    <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
 
     {props.profile.aboutMe && <div>
       <b>About me:</b> {props.profile.aboutMe}

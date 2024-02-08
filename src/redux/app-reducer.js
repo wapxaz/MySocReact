@@ -4,7 +4,8 @@ const INITIALIZED_SUCCESS = 'social-network/app/INITIALIZED_SUCCESS';
 
 //стартовые данные
 let initialState = {
-    initialized: false
+    initialized: false,
+    globalError: null
 };
 
 const appReducer = (state = initialState, action) => {

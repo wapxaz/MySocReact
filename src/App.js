@@ -23,8 +23,18 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer.jsx'));
 
 class App extends React.Component {
+  catchAllUnhandlerErrors = (reason, promise) => {
+    //alert("Some error occured");
+    console.log("Тут обработчик глобальной ошибки - например всплывающая форма на несколько секунд");
+    console.error(reason);
+  }
+
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener("unhandledrejection", this.catchAllUnhandlerErrors);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("unhandledrejection", this.catchAllUnhandlerErrors);
   }
   render() {
     if (!this.props.initialized) {
