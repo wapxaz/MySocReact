@@ -22,7 +22,7 @@ const NewPostReduxForm = reduxForm({ form: 'addNewPostForm' })(AddNewPostForm);
 
 const MyPosts = React.memo((props) => {
 
-  let postsElements = [...props.posts].reverse().map(p => <Post message={p.post} likeCount={p.likeCount} key={p.id} />);
+  let postsElements = [...props.posts].reverse().map(p => <Post key={p.id} message={p.post} likeCount={p.likeCount} />);
 
   const onSubmit = (formData) => {
     props.addPost(formData.newPost);

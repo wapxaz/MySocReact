@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'social-network/profile/ADD-POST';
@@ -5,6 +6,7 @@ const SET_USER_PROFILE = 'social-network/profile/SET_USER_PROFILE';
 const SET_STATUS = 'social-network/profile/SET_STATUS';
 const DELETE_POST = 'social-network/profile/DELETE_POST';
 const SAVE_PHOTO_SUCCESS = 'social-network/profile/SAVE_PHOTO_SUCCESS';
+const UPDATE_PROFILE_SUCCESS = 'social-network/profile/UPDATE_PROFILE_SUCCESS';
 
 //стартовые данные
 let initialState = {
@@ -53,6 +55,12 @@ const profileReducer = (state = initialState, action) => {
                 profile: {...state.profile, photos: action.photos}
             };
         }
+        case UPDATE_PROFILE_SUCCESS: {
+            return {
+                ...state,
+                profile: action.profileData
+            };
+        }
         default:
             return state;
     }
@@ -74,6 +82,10 @@ export const deletePost = (postId) => ({
 export const savePhotoSuccess = (photos) => ({
     type: SAVE_PHOTO_SUCCESS,
     photos
+})
+export const saveProfileSuccess = (profileData) => ({
+    type: UPDATE_PROFILE_SUCCESS,
+    profileData
 })
 
 export const getProfile = (profileId) => async (dispatch) => {
@@ -97,6 +109,25 @@ export const savePhoto = (file) => async (dispatch) => {
     let response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos));
+    }
+}
+
+export const saveProfile = (profileData) => async (dispatch, getState) => {
+    const profileId = getState().auth.userId;
+    const response = await profileAPI.saveProfile(profileData);
+    if (response.data.resultCode === 0) {
+        dispatch(getProfile(profileId));
+    } else {
+        dispatch(stopSubmit("profile-redux-form",{_error: response.data.messages[0]}));
+        /* вывод ошибки под конкретным полем в форме - не работает
+        dispatch(stopSubmit("profile-redux-form", {
+            "contacts": {
+                "vk": response.data.messages[0]
+            }
+        }));
+        */
+
+        return false;//Promise.reject(response.data.messages[0]);
     }
 }
 
