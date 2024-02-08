@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, legacy_createStore as createStore} from "redux"; 
+import {applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux"; 
 import profileReducer from "./profile-reducer.js";
 import dialogReducer from "./dialog-reducer.js";
 import sidebarReducer from "./sidebar-reducer.js";
@@ -7,7 +7,6 @@ import authReducer from "./auth-reducer.js";
 import {thunk as thunkMiddleware} from "redux-thunk";
 import { reducer as formReducer } from 'redux-form';
 import appReducer from "./app-reducer.js";
-import { compose } from "redux";
 
 //файл настроек store REDUX
 
