@@ -1,5 +1,14 @@
 const ADD_MESSAGE = 'social-network/dialog/ADD-MESSAGE';
 
+type DialogType = {
+    id: number
+    name: string
+    img: string
+}
+type MessagesType = {
+    id: number
+    message: string
+}
 //стартовые данные
 let initialState = {
     dialogs: [
@@ -9,17 +18,20 @@ let initialState = {
         { id: 4, name: 'Olya', img: 'https://img.youtube.com/vi/Y8p_QOuRbzw/maxresdefault.jpg' },
         { id: 5, name: 'Petya', img: 'https://www.discoverwalks.com/blog/wp-content/uploads/2023/03/michael_b._jordan_cannes_2018.jpg' },
         { id: 6, name: 'Ken', img: 'https://people.com/thmb/ZgtjavC9W8bmobnykYYrQ806u4I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(749x0:751x2)/oprah-winfrey-people-1-fc18eac4118e4ea0b5a01b1b3e3f2ae6.jpg' }
-    ],
+
+    ] as Array<DialogType>,
     messages: [
         { id: 1, message: 'Hi' },
         { id: 2, message: 'How are you?' },
         { id: 3, message: 'Where are you from?' },
         { id: 4, message: 'hello' },
         { id: 5, message: 'I am here' }
-    ]
+    ] as Array<MessagesType>
 };
 
-const dialogReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+
+const dialogReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_MESSAGE: {
             let newMessage = {
@@ -28,8 +40,7 @@ const dialogReducer = (state = initialState, action) => {
             };
             return {
                 ...state,
-                messages: [...state.messages, newMessage],
-                newMessage: ''
+                messages: [...state.messages, newMessage]
             };
         }
         default:
@@ -37,6 +48,10 @@ const dialogReducer = (state = initialState, action) => {
     }
 }
 
-export const addMessageActionCreator = (newMessage) => ({ type: ADD_MESSAGE, newMessage })
+type addMessageActionCreatorType = {
+    type: typeof ADD_MESSAGE
+    newMessage: string
+}
+export const addMessageActionCreator = (newMessage: string): addMessageActionCreatorType => ({ type: ADD_MESSAGE, newMessage })
 
 export default dialogReducer;

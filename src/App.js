@@ -1,22 +1,22 @@
 import './App.css';
-import Navbar from './components/Navbar/Navbar';
-import News from './components/News/News';
-import Music from './components/Music/Music';
-import Settings from './components/Settings/Settings';
+import Navbar from './components/Navbar/Navbar.jsx';
+import News from './components/News/News.jsx';
+import Music from './components/Music/Music.jsx';
+import Settings from './components/Settings/Settings.jsx';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/Login';
+import HeaderContainer from './components/Header/HeaderContainer.jsx';
+import Login from './components/Login/Login.jsx';
 import React, { Suspense } from 'react';
-import { initializeApp } from './redux/app-reducer';
+import { initializeApp } from './redux/app-reducer.ts';
 import { connect } from 'react-redux';
-import Preloader from './components/common/Preloader/Preloader';
+import Preloader from './components/common/Preloader/Preloader.jsx';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/redux-store.js';
 
 //ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer.jsx'));
 //import ProfileContainer from './components/Profile/ProfileContainer';
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.jsx'));
 //import UsersContainer from './components/Users/UsersContainer';

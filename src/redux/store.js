@@ -1,6 +1,6 @@
-import profileReducer from "./profile-reducer.js";
-import dialogReducer from "./dialog-reducer.js";
-import sidebarReducer from "./sidebar-reducer.js";
+import profileReducer from "./profile-reducer.ts";
+import dialogReducer from "./dialog-reducer.ts";
+import sidebarReducer from "./sidebar-reducer.ts";
 
 //самописный store REDUX - по нему изучал, как всё устроено
 //сейчас не используется
