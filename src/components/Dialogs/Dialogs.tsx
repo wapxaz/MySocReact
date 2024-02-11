@@ -2,16 +2,13 @@ import React from 'react';
 import s from "./Dialogs.module.css";
 import Message from './Message/Message.tsx';
 import DialogItem from './DialogItem/DialogItem.tsx';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import { TextArea } from '../common/FormsControls/FormsControls.tsx';
 import { maxLengthCreator, required } from '../../utils/validators/validators.ts';
 import { AppStateType } from '../../redux/redux-store.ts';
 
-type AddNewMessagePropsType = {
-    handleSubmit: any
-}
 // для добавления нового сообщения
-const AddNewMessage: React.FC<AddNewMessagePropsType> = (props) => {
+const AddNewMessage: React.FC<InjectedFormProps<FormDataType>>  = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -24,18 +21,21 @@ const AddNewMessage: React.FC<AddNewMessagePropsType> = (props) => {
     );
 }
 
-const AddNewMessageReduxForm = reduxForm({ form: 'addNewMessageForm' })(AddNewMessage);
+const AddNewMessageReduxForm = reduxForm<FormDataType>({ form: 'addNewMessageForm' })(AddNewMessage);
 
 type DialogsPropsType ={
     dialogsPage: AppStateType["dialogsPage"]
     addMessage: (newMessage: string) => void
+}
+type FormDataType = {
+    newMessage: string
 }
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
     //оборачиваю данные из массивов в компоненты и далее отрисовываю их
     let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} img={d.img} />);
     let messageselements = props.dialogsPage.messages.map(m => <Message message={m.message} key={m.id} id={m.id} />);
 
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: FormDataType) => {
         props.addMessage(formData.newMessage);
     }
 

@@ -11,7 +11,7 @@ import { AppStateType } from '../../redux/redux-store.ts';
 type LoginFormPropsType = {
     captchaUrl: string | null
 }
-//форма авторизации на сайте
+//форма авторизации на сайте 
 const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormPropsType> & LoginFormPropsType> = ({ handleSubmit, error, captchaUrl }) => {
     return (
         <form onSubmit={handleSubmit}>
