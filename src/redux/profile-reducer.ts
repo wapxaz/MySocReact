@@ -1,6 +1,8 @@
 import { stopSubmit } from "redux-form";
 import { profileAPI } from "../api/api";
 import { PostType, ProfilePhotosType, ProfileType } from "../types/types";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "./redux-store";
 
 const ADD_POST = 'social-network/profile/ADD-POST';
 const SET_USER_PROFILE = 'social-network/profile/SET_USER_PROFILE';
@@ -23,7 +25,7 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -70,6 +72,9 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
             return state;
     }
 }
+
+// все Actions Types
+type ActionsTypes = AddPostActionCreatorType | SetUserProfileActionType | SetStatusActionType | DeletePostActionType | SavePhotoSuccessActionType | SaveProfileSuccessActionType
 
 type AddPostActionCreatorType = {
     type: typeof ADD_POST
@@ -122,17 +127,21 @@ export const saveProfileSuccess = (profileData: ProfileType): SaveProfileSuccess
     profileData
 })
 
-export const getProfile = (profileId: number) => async (dispatch: any) => {
+
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
+export const getProfile = (profileId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getProfile(profileId);
     dispatch(setUserProfile(data));
 }
 
-export const getStatus = (userId: number) => async (dispatch: any) => {
+export const getStatus = (userId: number): ThunkType => async (dispatch) => {
     let data = await profileAPI.getStatus(userId);
     dispatch(setStatus(data));
 }
 
-export const updateStatus = (status: string) => async (dispatch: any) => {
+export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     try {
         let response = await profileAPI.updateStatus(status);
         if (response.data.resultCode === 0) {
@@ -143,20 +152,22 @@ export const updateStatus = (status: string) => async (dispatch: any) => {
     }
 }
 
-export const savePhoto = (file: any) => async (dispatch: any) => {
+export const savePhoto = (file: any): ThunkType => async (dispatch) => {
     let response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos));
     }
 }
 
-export const saveProfile = (profileData: ProfileType) => async (dispatch: any, getState) => {
+//затипизировать!!!
+export const saveProfile = (profileData: ProfileType) => async (dispatch: any, getState: any) => {
     const profileId = getState().auth.userId;
     const response = await profileAPI.saveProfile(profileData);
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === 0 && profileId !== null) {
         dispatch(getProfile(profileId));
     } else {
         dispatch(stopSubmit("profile-redux-form", { _error: response.data.messages[0] }));
+        //TODO: затипизировать stopSubmit
         /* вывод ошибки под конкретным полем в форме - не работает
         dispatch(stopSubmit("profile-redux-form", {
             "contacts": {

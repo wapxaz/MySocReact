@@ -5,9 +5,11 @@ let initialState = [
     { id: 5, name: 'Petya', img: 'https://www.discoverwalks.com/blog/wp-content/uploads/2023/03/michael_b._jordan_cannes_2018.jpg' }
 ];
 
+type ActionsTypes = {}
+
 export type InitialStateType = typeof initialState
 
-const sidebarReducer = (state = initialState, action: any): InitialStateType => {
+const sidebarReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     return state;
 }
 

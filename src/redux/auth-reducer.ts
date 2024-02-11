@@ -1,5 +1,7 @@
 import { stopSubmit } from "redux-form";
 import { authAPI, securityAPI } from "../api/api";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "./redux-store";
 
 const SET_USER_DATA = 'social-network/auth/SET_USER_DATA';
 const GET_CAPTCHA_URL_SUCCESS = 'social-network/auth/GET_CAPTCHA_URL_SUCCESS';
@@ -15,7 +17,7 @@ let initialState = {
 
 export type InitialStateType = typeof initialState
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
         case GET_CAPTCHA_URL_SUCCESS: {
@@ -28,6 +30,9 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
             return state;
     }
 }
+
+// все типы экшн тайпов
+type ActionsTypes = SetAuthUserDataActionType | GetCaptchaUrlSuccessActionType 
 
 type SetAuthUserDataActionPayloadType = {
     userId: number | null
@@ -49,7 +54,13 @@ type GetCaptchaUrlSuccessActionType = {
 }
 export const getCaptchaUrlSuccess = (captchaUrl: string): GetCaptchaUrlSuccessActionType => ({ type: GET_CAPTCHA_URL_SUCCESS, payload: { captchaUrl } });
 
-export const getAuthUserData = () => async (dispatch: any) => {
+
+
+
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
+
+export const getAuthUserData = (): ThunkType => async (dispatch) => {
     let response = await authAPI.me();
     if (response.data.resultCode === 0) {
         let { id, login, email } = response.data.data;
@@ -57,7 +68,7 @@ export const getAuthUserData = () => async (dispatch: any) => {
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async (dispatch) => {
     let response = await authAPI.login(email, password, rememberMe, captcha);
     if (response.data.resultCode === 0) {
         // успешная авторизация
@@ -70,17 +81,18 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
         }
 
         let errorMessage = response.data.messages.length > 0 ? response.data.messages : "Some error";
-        dispatch(stopSubmit("login", { _error: errorMessage }));
+        //TODO: затипизировать stopSubmit
+        ///dispatch(stopSubmit("login", { _error: errorMessage }));
     }
 }
 
-export const getCaptchaUrl = () => async (dispatch: any) => {
+export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
     const response = await securityAPI.getCaptchaUrl();
     const captchaUrl = response.data.url;
     dispatch(getCaptchaUrlSuccess(captchaUrl));
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): ThunkType => async (dispatch) => {
     let response = await authAPI.logout();
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false));

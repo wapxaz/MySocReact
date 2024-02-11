@@ -126,6 +126,8 @@ type DispatchType = Dispatch<ActionsTypes> //тип для dispapch
 // export const getUsers = (currentPage: number, pageSize: number) => async (dispatch: DispatchType, getState: GetStateType) => {
 
 // 2) второй вариант типизации thunk, как рекомендует оф документация redux
+
+//общий тип для thunk
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 
 export const getUsers = (currentPage: number, pageSize: number): ThunkType => async (dispatch, getState) => {
