@@ -1,7 +1,8 @@
-import { stopSubmit } from "redux-form";
-import { ResultCodeEnum, ResultCodeForCapthca, authAPI, securityAPI } from "../api/api.ts";
-import { ThunkAction } from "redux-thunk";
-import { AppStateType, InferActionsTypes } from "./redux-store";
+import { FormAction, stopSubmit } from "redux-form";
+import { ResultCodeEnum, ResultCodeForCapthca } from "../api/api.ts";
+import { authAPI } from "../api/auth-api.ts";
+import { securityAPI } from "../api/security-api.ts";
+import { BaseThunkType, InferActionsTypes } from "./redux-store";
 
 //стартовые данные
 let initialState = {
@@ -12,12 +13,10 @@ let initialState = {
     captchaUrl: null as string | null
 };
 
-export type InitialStateType = typeof initialState
-
 const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case 'SET_USER_DATA':
-        case 'GET_CAPTCHA_URL_SUCCESS': {
+        case 'SN/AUTH/SET_USER_DATA':
+        case 'SN/AUTH/GET_CAPTCHA_URL_SUCCESS': {
             return {
                 ...state,
                 ...action.payload
@@ -28,18 +27,13 @@ const authReducer = (state = initialState, action: ActionsTypes): InitialStateTy
     }
 }
 
-// список всех ActionType через тип-обертку
-type ActionsTypes = InferActionsTypes<typeof actions>
-
 export const actions = {
-    setAuthUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({ type: 'SET_USER_DATA', payload: { userId, email, login, isAuth } }),
-    getCaptchaUrlSuccess: (captchaUrl: string) => ({ type: 'GET_CAPTCHA_URL_SUCCESS', payload: { captchaUrl } })
+    setAuthUserData: (userId: number | null, email: string | null, login: string | null, isAuth: boolean) => ({ type: 'SN/AUTH/SET_USER_DATA', payload: { userId, email, login, isAuth } } as const),
+    getCaptchaUrlSuccess: (captchaUrl: string) => ({ type: 'SN/AUTH/GET_CAPTCHA_URL_SUCCESS', payload: { captchaUrl } } as const)
 }
 
 
 
-
-type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
     let response = await authAPI.me();
@@ -56,14 +50,14 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
         dispatch(getAuthUserData());
     } else {
         // ошибка
-        if (response.resultCode === ResultCodeForCapthca.CaptchaIsRequired) {
+        if (response.resultCode === ResultCodeForCapthca.CaptchaIsRequired as number) {
             // капча
             dispatch(getCaptchaUrl());
         }
 
-        let errorMessage = response.messages.length > 0 ? response.messages : "Some error";
+        let errorMessage = response.messages ? response.messages : "Some error";
         //TODO: затипизировать stopSubmit
-        ///dispatch(stopSubmit("login", { _error: errorMessage }));
+        dispatch(stopSubmit("login", { _error: errorMessage }));
     }
 }
 
@@ -79,5 +73,11 @@ export const logout = (): ThunkType => async (dispatch) => {
         dispatch(actions.setAuthUserData(null, null, null, false));
     }
 }
+
+type InitialStateType = typeof initialState
+// список всех ActionType через тип-обертку
+type ActionsTypes = InferActionsTypes<typeof actions>
+//общий тип для thunk
+type ThunkType = BaseThunkType<ActionsTypes | FormAction>
 
 export default authReducer;
