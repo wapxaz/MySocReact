@@ -1,4 +1,4 @@
-const ADD_MESSAGE = 'social-network/dialog/ADD-MESSAGE';
+import { InferActionsTypes } from "./redux-store";
 
 type DialogType = {
     id: number
@@ -33,7 +33,7 @@ export type InitialStateType = typeof initialState
 
 const dialogReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
-        case ADD_MESSAGE: {
+        case 'ADD_MESSAGE': {
             let newMessage = {
                 id: 6,
                 message: action.newMessage
@@ -48,13 +48,11 @@ const dialogReducer = (state = initialState, action: ActionsTypes): InitialState
     }
 }
 
-//список всех экшн тайпов
-type ActionsTypes = addMessageActionCreatorType
+// список всех ActionType через тип-обертку
+type ActionsTypes = InferActionsTypes<typeof actions>
 
-type addMessageActionCreatorType = {
-    type: typeof ADD_MESSAGE
-    newMessage: string
+export const actions = {
+    addMessageActionCreator: (newMessage: string) => ({ type: 'ADD_MESSAGE', newMessage } as const)
 }
-export const addMessageActionCreator = (newMessage: string): addMessageActionCreatorType => ({ type: ADD_MESSAGE, newMessage })
 
 export default dialogReducer;
