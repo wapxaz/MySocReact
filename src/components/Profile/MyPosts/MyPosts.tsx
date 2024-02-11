@@ -1,12 +1,16 @@
 import React from 'react';
 import s from './MyPosts.module.css';
-import Post from './Post/Post';
+import Post from './Post/Post.tsx';
 import { Field, reduxForm } from 'redux-form';
 import { required, maxLengthCreator } from '../../../utils/validators/validators';
 import { TextArea } from '../../common/FormsControls/FormsControls';
+import { AppStateType } from '../../../redux/redux-store.ts';
 
+type AddNewPostFormPropsType = {
+  handleSubmit: any
+}
 //форма добавления нового поста в ленту
-const AddNewPostForm = (props) => {
+const AddNewPostForm: React.FC<AddNewPostFormPropsType> = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
@@ -21,12 +25,16 @@ const AddNewPostForm = (props) => {
 
 const NewPostReduxForm = reduxForm({ form: 'addNewPostForm' })(AddNewPostForm);
 
+type MyPostsPropsType = {
+  addPost: (newPost: string) => void
+  posts: AppStateType["profilePage"]["posts"]
+}
 //React.memo - оптимизация отрисовки, аналог PureComponent в классовой компоненте
-const MyPosts = React.memo((props) => {
+const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
 
   let postsElements = [...props.posts].reverse().map(p => <Post key={p.id} message={p.post} likeCount={p.likeCount} />);
 
-  const onSubmit = (formData) => {
+  const onSubmit = (formData: any) => {
     props.addPost(formData.newPost);
   }
 

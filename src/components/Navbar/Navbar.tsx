@@ -1,10 +1,13 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import { NavLink } from 'react-router-dom';
-import Block3FriendsContainer from './Block3Friends/Block3FriendsContainer';
+import Block3FriendsContainer from './Block3Friends/Block3FriendsContainer.tsx';
 
+type PropsType = {
+
+}
 //левое меню
-const Navbar = (props) => {
+const Navbar: React.FC<PropsType> = (props) => {
   return (
     <nav className={s.nav}>
       <div className={`${s.item} ${s.active}`}>

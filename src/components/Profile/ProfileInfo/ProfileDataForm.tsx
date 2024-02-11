@@ -2,9 +2,15 @@ import React from 'react';
 import s from './ProfileInfo.module.css';
 import s_form from '../../common/FormsControls/FormsControls.module.css';
 import { Field, reduxForm } from 'redux-form';
+import { AppStateType } from '../../../redux/redux-store';
 
+type PropsType = {
+  handleSubmit: any
+  error: any
+  profile: AppStateType["profilePage"]["profile"] | null
+}
 //форма редактирования данных пользователя(только своего авторизованного)
-const ProfileDataFormRedux = ({ handleSubmit, profile, error }) => {
+const ProfileDataFormRedux: React.FC<PropsType> = ({ handleSubmit, profile, error }) => {
   return <form onSubmit={handleSubmit}>
     <div className={s.fullName}>
       <b>Full name:</b> <Field name="fullName" component="input" type="text" placeholder="Full name" />

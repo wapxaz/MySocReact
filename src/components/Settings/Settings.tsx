@@ -3,8 +3,11 @@ import s from "./Settings.module.css";
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
+type PropsType = {
+
+}
 //страница настроек - в разработке 
-const Settings = () => {
+const Settings: React.FC<PropsType> = () => {
     return (
         <div>
             Settings

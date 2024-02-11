@@ -3,8 +3,11 @@ import s from "./Music.module.css";
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
+type PropsType = {
+
+}
 //страница с музыкой - в разработке 
-const Music = () => {
+const Music: React.FC<PropsType> = () => {
     return (
         <div>
             Music

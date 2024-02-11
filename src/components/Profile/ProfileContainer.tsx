@@ -1,13 +1,42 @@
 import React from 'react';
-import Profile from './Profile';
+import Profile from './Profile.tsx';
 import { connect } from 'react-redux';
 import { getProfile, getStatus, updateStatus, savePhoto, saveProfile } from '../../redux/profile-reducer.ts';
 import { Navigate } from "react-router-dom";
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { withRouter } from '../../hoc/withRouter';
+import { AppStateType } from '../../redux/redux-store.ts';
 
-class ProfileContainer extends React.Component {
+type MapStateToPropsType = {
+  profile: AppStateType["profilePage"]["profile"]
+  currentUserId: number | null
+  isAuth: boolean
+  status: string
+  isOwner?: boolean
+}
+type MapDispatchToPropsType = {
+  getProfile: (profileId: number) => void
+  getStatus: (profileId: number) => void
+  updateStatus: (newStatus: string) => void
+  savePhoto: (file: any) => void
+  saveProfile: (profileData: any) => void
+}
+type RouterParamsProfileIdType = {
+  profileId: number | null
+}
+type RouterParamsType = {
+  params: RouterParamsProfileIdType
+}
+type OwnPropsType = {
+  router: RouterParamsType
+}
+type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
+type StateType = {
+  isRedirectRoLogin: boolean
+}
+
+class ProfileContainer extends React.Component<PropsType, StateType> {
 
   //локальный стейт для редиректа на страницу логина, когда не авторизованы и не настранице конеретного пользователя
   state = {
@@ -45,7 +74,7 @@ class ProfileContainer extends React.Component {
     this.refreshProfile();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps: PropsType, prevState: StateType, snapshot: any) {
     if (this.props.router.params.profileId != prevProps.router.params.profileId) {
       this.refreshProfile();
     }
@@ -72,7 +101,7 @@ class ProfileContainer extends React.Component {
   }
 }
 
-let mapStateToProps = (state) => ({
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
   profile: state.profilePage.profile,
   currentUserId: state.auth.userId,
   isAuth: state.auth.isAuth,
@@ -82,5 +111,5 @@ let mapStateToProps = (state) => ({
 export default compose(
   withRouter,
   //withAuthRedirect,
-  connect(mapStateToProps, { getProfile, getStatus, updateStatus, savePhoto, saveProfile })
+  connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, { getProfile, getStatus, updateStatus, savePhoto, saveProfile })
 )(ProfileContainer);

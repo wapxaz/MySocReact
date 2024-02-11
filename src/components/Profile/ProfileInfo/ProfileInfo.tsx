@@ -1,14 +1,23 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
-import Preloader from '../../common/Preloader/Preloader';
+import Preloader from '../../common/Preloader/Preloader.tsx';
 import defaultAvatar from '../../../assets/images/avatar_default.png';
 //import ProfileStatus from './ProfileStatus';
-import ProfileStatusWithHooks from './ProfileStatusWithHooks';
+import ProfileStatusWithHooks from './ProfileStatusWithHooks.tsx';
 import { useState } from 'react';
-import ProfileDataForm from './ProfileDataForm';
-import Contact from './Contact';
+import ProfileDataForm from './ProfileDataForm.tsx';
+import Contact from './Contact.tsx';
+import { AppStateType } from '../../../redux/redux-store.ts';
 
-const ProfileInfo = (props) => {
+type PropsType = {
+  profile: AppStateType["profilePage"]["profile"] | null
+  isOwner: boolean
+  status: string
+  savePhoto: (file: any) => void
+  saveProfile: (profileData: any) => void
+  updateStatus: (status: string) => void
+}
+const ProfileInfo: React.FC<PropsType> = (props) => {
   let [editMode, setEditMode] = useState(false); //хук переключатель режима редактирования данных пользователя
 
   const onSubmit = (formData) => {
@@ -49,7 +58,14 @@ const ProfileInfo = (props) => {
   );
 }
 
-const ProfileData = (props) => {
+type ProfileDataPropsType ={
+  isOwner: boolean
+  profile: AppStateType["profilePage"]["profile"] | null
+  status: string
+  goToEditMode: () => void
+  updateStatus: (newStatus: string) => void
+}
+const ProfileData: React.FC<ProfileDataPropsType> = (props) => {
   return <div>
     {props.isOwner &&
       <div>

@@ -10,7 +10,7 @@ import appReducer from "./app-reducer.ts";
 
 //файл настроек store REDUX
 
-let reducers = combineReducers({
+let rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogReducer,
     sidebarFriends: sidebarReducer,
@@ -20,9 +20,13 @@ let reducers = combineReducers({
     app: appReducer
 });
 
+type RootReducerType = typeof rootReducer
+export type AppStateType = ReturnType<RootReducerType>
+
 //через эти 2 строчки подключаю редакс для расширения в хроме
+//@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 //let store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
