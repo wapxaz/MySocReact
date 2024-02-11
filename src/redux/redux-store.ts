@@ -23,6 +23,10 @@ let rootReducer = combineReducers({
 type RootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<RootReducerType>
 
+//вспомогательный тип InferActionsTypes, который из объекта экшн криэторов создаёт типы для этих экшн криеэторов
+type PropertiesTypes<T> = T extends {[key: string]: infer U} ? U : never
+export type InferActionsTypes<T extends {[key: string]: (...args: any[]) => any}> = ReturnType<PropertiesTypes<T>>
+
 //через эти 2 строчки подключаю редакс для расширения в хроме
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
