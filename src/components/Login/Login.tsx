@@ -1,7 +1,7 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { Input } from '../common/FormsControls/FormsControls';
-import { required } from '../../utils/validators/validators';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
+import { Input } from '../common/FormsControls/FormsControls.tsx';
+import { required } from '../../utils/validators/validators.ts';
 import { connect } from 'react-redux';
 import { login } from '../../redux/auth-reducer.ts';
 import { Navigate } from 'react-router-dom';
@@ -9,12 +9,10 @@ import s from '../common/FormsControls/FormsControls.module.css';
 import { AppStateType } from '../../redux/redux-store.ts';
 
 type LoginFormPropsType = {
-    handleSubmit: any 
-    error: any
-    captchaUrl: string
+    captchaUrl: string | null
 }
 //форма авторизации на сайте
-const LoginForm: React.FC<LoginFormPropsType> = ({ handleSubmit, error, captchaUrl }) => {
+const LoginForm: React.FC<InjectedFormProps<FormDataType, LoginFormPropsType> & LoginFormPropsType> = ({ handleSubmit, error, captchaUrl }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -42,7 +40,7 @@ const LoginForm: React.FC<LoginFormPropsType> = ({ handleSubmit, error, captchaU
     );
 }
 
-const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm);
+const LoginReduxForm = reduxForm<FormDataType, LoginFormPropsType>({ form: 'login' })(LoginForm);
 
 type FormDataType = {
     email: string
@@ -53,7 +51,7 @@ type FormDataType = {
 
 type MapStateToPropsType = {
     isAuth: boolean
-    captchaUrl: string
+    captchaUrl: string | null
   }
   type MapDispatchToPropsType = {
     login: (email: string, password: string, rememberMe: boolean, captcha: string) => void

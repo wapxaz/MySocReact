@@ -2,8 +2,8 @@ import React from 'react';
 import s from './MyPosts.module.css';
 import Post from './Post/Post.tsx';
 import { Field, reduxForm } from 'redux-form';
-import { required, maxLengthCreator } from '../../../utils/validators/validators';
-import { TextArea } from '../../common/FormsControls/FormsControls';
+import { required, maxLengthCreator } from '../../../utils/validators/validators.ts';
+import { TextArea } from '../../common/FormsControls/FormsControls.tsx';
 import { AppStateType } from '../../../redux/redux-store.ts';
 
 type AddNewPostFormPropsType = {

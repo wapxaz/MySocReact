@@ -3,8 +3,8 @@ import s from "./Dialogs.module.css";
 import Message from './Message/Message.tsx';
 import DialogItem from './DialogItem/DialogItem.tsx';
 import { Field, reduxForm } from 'redux-form';
-import { TextArea } from '../common/FormsControls/FormsControls';
-import { maxLengthCreator, required } from '../../utils/validators/validators';
+import { TextArea } from '../common/FormsControls/FormsControls.tsx';
+import { maxLengthCreator, required } from '../../utils/validators/validators.ts';
 import { AppStateType } from '../../redux/redux-store.ts';
 
 type AddNewMessagePropsType = {
