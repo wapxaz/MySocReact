@@ -1,5 +1,5 @@
 import { AppStateType } from './redux-store';
-import { usersAPI } from "../api/api";
+import { ResultCodeEnum, usersAPI } from "../api/api.ts";
 import { updatObjectInArray } from "../utils/object-helpers";
 import { ProfilePhotosType, UserType } from "../types/types";
 import { Dispatch } from 'redux';
@@ -147,7 +147,7 @@ const _followUnfollowFlow = async (dispatch: DispatchType,
                                 actionCreator: (userId: number) => FollowSuccessActionType | UnfollowSuccessActionType) => {
     dispatch(toggleFollowingInProgress(true, userId));
     let response = await apiMethod(userId);
-    if (response.data.resultCode === 0) {
+    if (response.data.resultCode === ResultCodeEnum.Success) {
         dispatch(actionCreator(userId));
     }
     dispatch(toggleFollowingInProgress(false, userId));

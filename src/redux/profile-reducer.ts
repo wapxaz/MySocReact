@@ -1,5 +1,5 @@
 import { stopSubmit } from "redux-form";
-import { profileAPI } from "../api/api";
+import { ResultCodeEnum, profileAPI } from "../api/api.ts";
 import { PostType, ProfilePhotosType, ProfileType } from "../types/types";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "./redux-store";
@@ -144,7 +144,7 @@ export const getStatus = (userId: number): ThunkType => async (dispatch) => {
 export const updateStatus = (status: string): ThunkType => async (dispatch) => {
     try {
         let response = await profileAPI.updateStatus(status);
-        if (response.data.resultCode === 0) {
+        if (response.resultCode === ResultCodeEnum.Success) {
             dispatch(setStatus(status));
         }
     } catch (error) {
@@ -154,8 +154,8 @@ export const updateStatus = (status: string): ThunkType => async (dispatch) => {
 
 export const savePhoto = (file: any): ThunkType => async (dispatch) => {
     let response = await profileAPI.savePhoto(file);
-    if (response.data.resultCode === 0) {
-        dispatch(savePhotoSuccess(response.data.data.photos));
+    if (response.resultCode === ResultCodeEnum.Success) {
+        dispatch(savePhotoSuccess(response.data.photos));
     }
 }
 
@@ -163,10 +163,10 @@ export const savePhoto = (file: any): ThunkType => async (dispatch) => {
 export const saveProfile = (profileData: ProfileType) => async (dispatch: any, getState: any) => {
     const profileId = getState().auth.userId;
     const response = await profileAPI.saveProfile(profileData);
-    if (response.data.resultCode === 0 && profileId !== null) {
+    if (response.resultCode === ResultCodeEnum.Success && profileId !== null) {
         dispatch(getProfile(profileId));
     } else {
-        dispatch(stopSubmit("profile-redux-form", { _error: response.data.messages[0] }));
+        dispatch(stopSubmit("profile-redux-form", { _error: response.messages[0] }));
         //TODO: затипизировать stopSubmit
         /* вывод ошибки под конкретным полем в форме - не работает
         dispatch(stopSubmit("profile-redux-form", {
