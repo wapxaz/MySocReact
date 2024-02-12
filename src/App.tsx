@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import Preloader from './components/common/Preloader/Preloader.tsx';
 import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './redux/redux-store.ts';
+import store, { AppStateType } from './redux/redux-store.ts';
 
 //ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
 //import DialogsContainer from './components/Dialogs/DialogsContainer.tsx';
@@ -22,9 +22,14 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 //import UsersContainer from './components/Users/UsersContainer.tsx';
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer.tsx'));
 
-class App extends React.Component {
+type MapPropsType = ReturnType<typeof mapStateToProps>
+type DispatchPropsType = {
+  initializeApp: () => void
+}
+
+class App extends React.Component<MapPropsType & DispatchPropsType> {
   //обработчик глобальных ошибок
-  catchAllUnhandlerErrors = (reason, promise) => {
+  catchAllUnhandlerErrors = (reason: PromiseRejectionEvent) => {
     console.log("Тут обработчик глобальной ошибки - например всплывающая форма на несколько секунд");
     console.error(reason);
   }
@@ -47,7 +52,7 @@ class App extends React.Component {
           <div className='app-wrapper-content'>
             <Suspense fallback={<div><Preloader /></div>}>
               <Routes>
-                <Route exact path='/' element={<Navigate to="/profile" />} />
+                <Route path='/' element={<Navigate to="/profile" />} />
                 <Route path='/dialogs/*' element={<DialogsContainer />} />
                 <Route path='/profile/:profileId?' element={<ProfileContainer />} />
                 <Route path='/users' element={<UsersContainer pageTitle={"Самурай"} />} />
@@ -65,13 +70,13 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized
 })
 
 const AppContainer = connect(mapStateToProps, { initializeApp })(App);
 
-const AppMain = (props) => {
+const AppMain: React.FC = () => {
   return <HashRouter>
     <Provider store={store}>
       <AppContainer />

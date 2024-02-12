@@ -1,6 +1,6 @@
 import React from 'react';
 import s from "./Music.module.css";
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect.tsx';
 import { compose } from 'redux';
 
 type PropsType = {

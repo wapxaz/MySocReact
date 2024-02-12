@@ -3,7 +3,7 @@ import Users from "./Users.tsx";
 import { connect } from "react-redux";
 import { follow, actions, unfollow, getUsers } from "../../redux/users-reducer.ts";
 import Preloader from "../common/Preloader/Preloader.tsx";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect.js";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect.tsx";
 import { compose } from "redux";
 import { getUsersSelector, getPageSize, getTotalUsersCount, getCurrentPage, getIsFetching, getFollowingInProgress } from "../../redux/users-selectors.ts";
 import { UserType } from "../../types/types.ts";
@@ -79,7 +79,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 export default compose(
     //withAuthRedirect,
     connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
-        setCurrentPage,
+        setCurrentPage: actions.setCurrentPage,
         //toggleFollowingInProgress,
         getUsers,
         follow,

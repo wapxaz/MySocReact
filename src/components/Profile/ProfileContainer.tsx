@@ -3,9 +3,9 @@ import Profile from './Profile.tsx';
 import { connect } from 'react-redux';
 import { getProfile, getStatus, updateStatus, savePhoto, saveProfile } from '../../redux/profile-reducer.ts';
 import { Navigate } from "react-router-dom";
-import { withAuthRedirect } from '../../hoc/withAuthRedirect';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect.tsx';
 import { compose } from 'redux';
-import { withRouter } from '../../hoc/withRouter';
+import { withRouter } from '../../hoc/withRouter.tsx';
 import { AppStateType } from '../../redux/redux-store.ts';
 
 type MapStateToPropsType = {
