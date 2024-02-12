@@ -1,29 +1,29 @@
 {
   "files": {
     "main.css": "/MySocReact/static/css/main.f633b5d2.css",
-    "main.js": "/MySocReact/static/js/main.f746eb00.js",
-    "static/css/856.9694559d.chunk.css": "/MySocReact/static/css/856.9694559d.chunk.css",
-    "static/js/856.7f113ba1.chunk.js": "/MySocReact/static/js/856.7f113ba1.chunk.js",
-    "static/css/156.1855c27b.chunk.css": "/MySocReact/static/css/156.1855c27b.chunk.css",
-    "static/js/156.a7c85b85.chunk.js": "/MySocReact/static/js/156.a7c85b85.chunk.js",
-    "static/css/76.44c40a95.chunk.css": "/MySocReact/static/css/76.44c40a95.chunk.css",
-    "static/js/76.71d1dc12.chunk.js": "/MySocReact/static/js/76.71d1dc12.chunk.js",
+    "main.js": "/MySocReact/static/js/main.015848b9.js",
+    "static/css/136.31c7a712.chunk.css": "/MySocReact/static/css/136.31c7a712.chunk.css",
+    "static/js/136.de20c270.chunk.js": "/MySocReact/static/js/136.de20c270.chunk.js",
+    "static/css/12.d529aafb.chunk.css": "/MySocReact/static/css/12.d529aafb.chunk.css",
+    "static/js/12.9260fd9b.chunk.js": "/MySocReact/static/js/12.9260fd9b.chunk.js",
+    "static/css/904.d932a0fa.chunk.css": "/MySocReact/static/css/904.d932a0fa.chunk.css",
+    "static/js/904.7c95a56a.chunk.js": "/MySocReact/static/js/904.7c95a56a.chunk.js",
     "static/js/592.7f72a991.chunk.js": "/MySocReact/static/js/592.7f72a991.chunk.js",
     "static/media/preloader.gif": "/MySocReact/static/media/preloader.75c4521334e47c6e3303.gif",
     "static/media/avatar_default.png": "/MySocReact/static/media/avatar_default.99b08e94f781d8d8eef4.png",
     "index.html": "/MySocReact/index.html",
     "main.f633b5d2.css.map": "/MySocReact/static/css/main.f633b5d2.css.map",
-    "main.f746eb00.js.map": "/MySocReact/static/js/main.f746eb00.js.map",
-    "856.9694559d.chunk.css.map": "/MySocReact/static/css/856.9694559d.chunk.css.map",
-    "856.7f113ba1.chunk.js.map": "/MySocReact/static/js/856.7f113ba1.chunk.js.map",
-    "156.1855c27b.chunk.css.map": "/MySocReact/static/css/156.1855c27b.chunk.css.map",
-    "156.a7c85b85.chunk.js.map": "/MySocReact/static/js/156.a7c85b85.chunk.js.map",
-    "76.44c40a95.chunk.css.map": "/MySocReact/static/css/76.44c40a95.chunk.css.map",
-    "76.71d1dc12.chunk.js.map": "/MySocReact/static/js/76.71d1dc12.chunk.js.map",
+    "main.015848b9.js.map": "/MySocReact/static/js/main.015848b9.js.map",
+    "136.31c7a712.chunk.css.map": "/MySocReact/static/css/136.31c7a712.chunk.css.map",
+    "136.de20c270.chunk.js.map": "/MySocReact/static/js/136.de20c270.chunk.js.map",
+    "12.d529aafb.chunk.css.map": "/MySocReact/static/css/12.d529aafb.chunk.css.map",
+    "12.9260fd9b.chunk.js.map": "/MySocReact/static/js/12.9260fd9b.chunk.js.map",
+    "904.d932a0fa.chunk.css.map": "/MySocReact/static/css/904.d932a0fa.chunk.css.map",
+    "904.7c95a56a.chunk.js.map": "/MySocReact/static/js/904.7c95a56a.chunk.js.map",
     "592.7f72a991.chunk.js.map": "/MySocReact/static/js/592.7f72a991.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f633b5d2.css",
-    "static/js/main.f746eb00.js"
+    "static/js/main.015848b9.js"
   ]
 }
