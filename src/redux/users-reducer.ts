@@ -1,5 +1,5 @@
 import { BaseThunkType, InferActionsTypes } from './redux-store';
-import { ResultCodeEnum } from "../api/api.ts";
+import { APIResponseType, ResultCodeEnum } from "../api/api.ts";
 import { usersAPI } from "../api/users-api.ts";
 import { updatObjectInArray } from "../utils/object-helpers.ts";
 import { UserType } from "../types/types";
@@ -84,7 +84,7 @@ export const getUsers = (currentPage: number, pageSize: number): ThunkType => as
 //вынесена общая логика ф-ций follow и unfollow
 const _followUnfollowFlow = async (dispatch: Dispatch<ActionsTypes>,
                                 userId: number,
-                                apiMethod: any,
+                                apiMethod: (userId: number) => Promise<APIResponseType>,
                                 actionCreator: (userId: number) => ActionsTypes) => {
     dispatch(actions.toggleFollowingInProgress(true, userId));
     let response = await apiMethod(userId);
@@ -95,11 +95,11 @@ const _followUnfollowFlow = async (dispatch: Dispatch<ActionsTypes>,
 }
 
 export const follow = (userId: number): ThunkType => async (dispatch) => {
-    _followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), actions.followSuccess);
+    await _followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), actions.followSuccess);
 }
 
 export const unfollow = (userId: number): ThunkType => async (dispatch) => {
-    _followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), actions.unfollowSuccess);
+    await _followUnfollowFlow(dispatch, userId, usersAPI.unfollow.bind(usersAPI), actions.unfollowSuccess);
 }
 
 export type InitialStateType = typeof initialState

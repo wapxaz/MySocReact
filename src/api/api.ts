@@ -18,8 +18,13 @@ export enum ResultCodeEnum {
 export enum ResultCodeForCapthca {
     CaptchaIsRequired = 10
 }
+// export type APIResponseType<D = {}, RC = ResultCodeEnum> = {
+//     data: D
+//     resultCode: ResultCodeEnum
+//     messages: RC
+// }
 export type APIResponseType<D = {}, RC = ResultCodeEnum> = {
     data: D
-    resultCode: ResultCodeEnum
-    messages: RC
+    resultCode: RC
+    messages: Array<string>
 }
