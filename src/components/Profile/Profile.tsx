@@ -2,16 +2,15 @@ import React from 'react';
 import s from './Profile.module.css';
 import ProfileInfo from './ProfileInfo/ProfileInfo.tsx';
 import MyPostsContainer from './MyPosts/MyPostsContainer.tsx';
-import { AppStateType } from '../../redux/redux-store';
+import { ProfileType } from '../../types/types.ts';
 
 type PropsType = {
   isOwner: boolean
-  profile: AppStateType["profilePage"]["profile"]
+  profile: ProfileType | null
   status: string
   updateStatus: (newStatus: string) => void
-  savePhoto: (file: any) => void
-  saveProfile: (profileData: any) => void
-  //store: any
+  savePhoto: (file: File) => void
+  saveProfile: (profileData: ProfileType) => void
 }
 const Profile: React.FC<PropsType> = (props) => {
   return (
@@ -22,7 +21,7 @@ const Profile: React.FC<PropsType> = (props) => {
                 updateStatus={props.updateStatus}
                 savePhoto={props.savePhoto}
                 saveProfile={props.saveProfile} />
-      <MyPostsContainer /*store={props.store}*/ />
+      <MyPostsContainer />
     </div>
   );
 }

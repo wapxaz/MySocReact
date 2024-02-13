@@ -21,7 +21,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     };
 }
 
-export default compose(
+export default compose<React.ComponentType>(
     withAuthRedirect,
     connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {...actions})
 )(Dialogs);

@@ -8,13 +8,14 @@ import { useState } from 'react';
 import ProfileDataForm from './ProfileDataForm.tsx';
 import Contact from './Contact.tsx';
 import { AppStateType } from '../../../redux/redux-store.ts';
+import { ProfileType } from '../../../types/types.ts';
 
 type PropsType = {
   profile: AppStateType["profilePage"]["profile"] | null
   isOwner: boolean
   status: string
-  savePhoto: (file: any) => void
-  saveProfile: (profileData: any) => void
+  savePhoto: (file: File) => void
+  saveProfile: (profileData: ProfileType) => void
   updateStatus: (status: string) => void
 }
 const ProfileInfo: React.FC<PropsType> = (props) => {
@@ -49,23 +50,27 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
           {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
         </div>
         {//переключатель режима редактирования данных пользователя
-        editMode
-          ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
-          : <ProfileData profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} goToEditMode={() => { setEditMode(true) }} />}
+          editMode
+            ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
+            : <ProfileData profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} goToEditMode={() => { setEditMode(true) }} />}
 
       </div>
     </div>
   );
 }
 
-type ProfileDataPropsType ={
+type ProfileDataPropsType = {
   isOwner: boolean
-  profile: AppStateType["profilePage"]["profile"] | null
+  profile: ProfileType | null //AppStateType["profilePage"]["profile"] | null
   status: string
   goToEditMode: () => void
   updateStatus: (newStatus: string) => void
 }
 const ProfileData: React.FC<ProfileDataPropsType> = (props) => {
+  if (props.profile === null) {
+    return <>Error: Profile is not be null</>
+  }
+
   return <div>
     {props.isOwner &&
       <div>
@@ -83,21 +88,24 @@ const ProfileData: React.FC<ProfileDataPropsType> = (props) => {
     </div>}
 
     {//если заполнена хоть одна строчка контактов, выводится строка "Contacts"
-    (props.profile.contacts.github
-      || props.profile.contacts.vk
-      || props.profile.contacts.facebook
-      || props.profile.contacts.instagram
-      || props.profile.contacts.twitter
-      || props.profile.contacts.website
-      || props.profile.contacts.youtube
-      || props.profile.contacts.mainLink)
-      ? <div><b>Contacts:</b></div>
-      : ''}
+      (props.profile.contacts.github
+        || props.profile.contacts.vk
+        || props.profile.contacts.facebook
+        || props.profile.contacts.instagram
+        || props.profile.contacts.twitter
+        || props.profile.contacts.website
+        || props.profile.contacts.youtube
+        || props.profile.contacts.mainLink)
+        ? <div><b>Contacts:</b></div>
+        : ''}
 
     {//возвращает массив ключей и проходится по каждому через ф-ю map, которая возвращает разметку для каждой строчки контактов пользователя(его соцсетей)
-    Object.keys(props.profile.contacts).map(key => {
-      return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
-    })}
+      Object.keys(props.profile.contacts).map(key => {
+        if (props.profile === null) {
+          return <>Error: Profile is not be null</>
+        }
+        return <Contact key={key} contactTitle={key} contactValue={props.profile.contacts[key]} />
+      })}
 
   </div>
 }

@@ -9,7 +9,6 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
 }
 type OwnPropsType = {
-  pageTitle: string
 }
 type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
@@ -17,11 +16,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     sidebarFriends: state.sidebarFriends
   };
 }
-let mapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
-  return {
 
-  };
-}
-const Block3FriendsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, mapDispatchToProps)(Block3Friends);
+const Block3FriendsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, {})(Block3Friends);
 
 export default Block3FriendsContainer;

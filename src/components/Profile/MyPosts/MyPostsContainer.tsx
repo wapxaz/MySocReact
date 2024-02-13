@@ -10,10 +10,6 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
   addPost: (newPost: string) => void
 }
-type OwnPropsType = {
-
-}
-type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType;
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
   return {
@@ -21,13 +17,7 @@ let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
 
   };
 }
-let mapDispatchToProps = (dispatch: any): MapDispatchToPropsType => {
-  return {
-    addPost: (newPost) => {
-      dispatch(actions.addPostActionCreator(newPost));
-    }
-  };
-}
-const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, mapDispatchToProps)(MyPosts);
+
+const MyPostsContainer = connect<MapStateToPropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {addPost: actions.addPostActionCreator})(MyPosts);
 
 export default MyPostsContainer;

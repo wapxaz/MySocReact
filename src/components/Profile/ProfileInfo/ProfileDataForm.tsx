@@ -2,7 +2,6 @@ import React from 'react';
 import s from './ProfileInfo.module.css';
 import s_form from '../../common/FormsControls/FormsControls.module.css';
 import { Field, InjectedFormProps, reduxForm } from 'redux-form';
-import { AppStateType } from '../../../redux/redux-store';
 import { ProfileType } from '../../../types/types';
 
 type PropsType = {
