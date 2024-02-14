@@ -10,7 +10,7 @@ const usersSearchFormValidate = (values: any) => {
 
 type FormType = {
     term: string
-    friend: 'null' | 'true' | 'false'
+    friend: string //'null' | 'true' | 'false'
 }
 type PropsType = {
     onFilterChanged: (filter: FilterType) => void
