@@ -8,8 +8,11 @@ type GetUsersResponseType = {
 }
 
 export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10) {
-        return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data);
+    getUsers(currentPage: number = 1, pageSize: number = 10, term: string = "", friend: boolean | null = null) {
+        const termParam = term !== "" ? "&term=" + term : "";
+        const frindParam = friend === null ? "" : "&friend=" + friend;
+
+        return instance.get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}${termParam}${frindParam}`).then(res => res.data);
     },
     follow(user_id: number) {
         return instance.post<APIResponseType>(`follow/${user_id}`).then(res => res.data);
