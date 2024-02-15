@@ -5,7 +5,7 @@ import Music from './components/Music/Music.tsx';
 import Settings from './components/Settings/Settings.tsx';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HeaderContainer from './components/Header/HeaderContainer.tsx';
-import Login from './components/Login/Login.tsx';
+import { LoginPage } from './components/Login/Login.tsx';
 import React, { Suspense } from 'react';
 import { initializeApp } from './redux/app-reducer.ts';
 import { connect } from 'react-redux';
@@ -60,7 +60,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
                 <Route path='/news' element={<News />} />
                 <Route path='/music' element={<Music />} />
                 <Route path='/settings' element={<Settings />} />
-                <Route path='/login' element={<Login />} />
+                <Route path='/login' element={<LoginPage />} />
                 <Route path='*' element={<div>404 NOT FOUND</div>} />
               </Routes>
             </Suspense>
