@@ -1,10 +1,10 @@
-import {Action, applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux"; 
+import {Action, AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore as createStore} from "redux"; 
 import profileReducer from "./profile-reducer.ts";
 import dialogReducer from "./dialog-reducer.ts";
 import sidebarReducer from "./sidebar-reducer.ts";
 import usersReducer from "./users-reducer.ts";
 import authReducer from "./auth-reducer.ts";
-import {ThunkAction, thunk as thunkMiddleware} from "redux-thunk";
+import {ThunkAction, ThunkDispatch, thunk as thunkMiddleware} from "redux-thunk";
 import { reducer as formReducer } from 'redux-form';
 import appReducer from "./app-reducer.ts";
 
@@ -28,6 +28,9 @@ export type InferActionsTypes<T> = T extends {[key: string]: (...args: any[]) =>
 
 //общий тип для thunk
 export type BaseThunkType<A extends Action = Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>
+
+export type AppDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>
+
 
 //через эти 2 строчки подключаю редакс для расширения в хроме
 //@ts-ignore
