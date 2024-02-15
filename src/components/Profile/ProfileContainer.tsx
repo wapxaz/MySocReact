@@ -1,116 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Profile from './Profile.tsx';
-import { connect } from 'react-redux';
-import { getProfile, getStatus, updateStatus, savePhoto, saveProfile } from '../../redux/profile-reducer.ts';
-import { Navigate } from "react-router-dom";
-import { withAuthRedirect } from '../../hoc/withAuthRedirect.tsx';
-import { compose } from 'redux';
-import { withRouter } from '../../hoc/withRouter.tsx';
-import { AppStateType } from '../../redux/redux-store.ts';
-import { ProfileType } from '../../types/types.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProfile, getStatus } from '../../redux/profile-reducer.ts';
+import { useNavigate, useParams } from "react-router-dom";
+import { AppDispatch, AppStateType } from '../../redux/redux-store.ts';
 
-type MapStateToPropsType = {
-  profile: AppStateType["profilePage"]["profile"]
-  currentUserId: number | null
-  isAuth: boolean
-  status: string
-  isOwner?: boolean
-}
-type MapDispatchToPropsType = {
-  getProfile: (profileId: number) => void
-  getStatus: (profileId: number) => void
-  updateStatus: (newStatus: string) => void
-  savePhoto: (file: File) => void
-  saveProfile: (profileData: ProfileType) => void
-}
-type RouterParamsProfileIdType = {
-  profileId: number | null
-}
-type RouterParamsType = {
-  params: RouterParamsProfileIdType
-}
-type OwnPropsType = {
-  router: RouterParamsType
-}
-type PropsType = MapStateToPropsType & MapDispatchToPropsType & OwnPropsType
-type StateType = {
-  isRedirectRoLogin: boolean
-}
+export const ProfilePage: React.FC = (props) => {
+  const currentUserId = useSelector((state: AppStateType) => state.auth.userId);
 
-class ProfileContainer extends React.Component<PropsType, StateType> {
+  //получаю ид текущего пользователя из урла
+  const paramsUrl = useParams();
 
-  //локальный стейт для редиректа на страницу логина, когда не авторизованы и не настранице конеретного пользователя
-  state = {
-    isRedirectRoLogin: false
-  }
+  const dispatch: AppDispatch = useDispatch();
 
-  activateRedirectToLogin = () => {
-    this.setState({
-      isRedirectRoLogin: true
-    });
-  }
+  useEffect(() => {
+    refreshProfile();
+  }, []);
 
-  deactivateRedirectToLogin = () => {
-    this.setState({
-      isRedirectRoLogin: false
-    });
-  }
+  useEffect(() => {
+    refreshProfile();
+  }, [paramsUrl.profileId]);
 
-  refreshProfile() {
-    let profileId = this.props.router.params.profileId;
+  //для редиректа на страницу логина
+  const navigate = useNavigate();
+
+  const refreshProfile = () => {
+    let profileId = Number(paramsUrl.profileId);
     if (!profileId) {
-      profileId = this.props.currentUserId;
+      if (currentUserId !== null) {
+        profileId = currentUserId;
+      }
       if (!profileId) {
-        this.activateRedirectToLogin();
+        navigate("/login"); //редирект на страницу логина
       }
 
     }
     if (profileId) {
-      this.props.getProfile(profileId);
-      this.props.getStatus(profileId);
+      dispatch(getProfile(profileId));
+      dispatch(getStatus(profileId));
     }
   }
 
-  componentDidMount() {
-    this.refreshProfile();
-  }
-
-  componentDidUpdate(prevProps: PropsType, prevState: StateType) {
-    if (this.props.router.params.profileId != prevProps.router.params.profileId) {
-      this.refreshProfile();
-    }
-  }
-
-  render() {
-    //редирект на страницу логина
-    if (this.state.isRedirectRoLogin) {
-      this.deactivateRedirectToLogin();
-      return <Navigate to={"/login"} />;
-    } else {
-      return (
-        <div>
-          <Profile {...this.props}
-            isOwner={!this.props.router.params.profileId}
-            profile={this.props.profile}
-            status={this.props.status}
-            updateStatus={this.props.updateStatus}
-            savePhoto={this.props.savePhoto}
-            saveProfile={this.props.saveProfile} />
-        </div>
-      );
-    }
-  }
+  return (
+    <div>
+      <Profile />
+    </div>
+  );
 }
-
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-  profile: state.profilePage.profile,
-  currentUserId: state.auth.userId,
-  isAuth: state.auth.isAuth,
-  status: state.profilePage.status,
-});
-
-export default compose<React.ComponentType>(
-  withRouter,
-  //withAuthRedirect,
-  connect<MapStateToPropsType, MapDispatchToPropsType, OwnPropsType, AppStateType>(mapStateToProps, { getProfile, getStatus, updateStatus, savePhoto, saveProfile })
-)(ProfileContainer);

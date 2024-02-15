@@ -89,6 +89,8 @@ export const getUsers = (currentPage: number, pageSize: number, filter: FilterTy
     dispatch(actions.toggleIsFetching(false));
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setUsersTotalCounts(data.totalCount));
+    dispatch(actions.setCurrentPage(currentPage));
+    dispatch(actions.setFilter(filter));
 }
 
 //вынесена общая логика ф-ций follow и unfollow

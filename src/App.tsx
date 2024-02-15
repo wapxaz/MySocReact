@@ -14,12 +14,13 @@ import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store, { AppStateType } from './redux/redux-store.ts';
 import { UsersPage } from './components/Users/UsersContainer.tsx';
+import { ProfilePage } from './components/Profile/ProfileContainer.tsx';
 
 //ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
 //import DialogsContainer from './components/Dialogs/DialogsContainer.tsx';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer.tsx'));
 //import ProfileContainer from './components/Profile/ProfileContainer.tsx';
-const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.tsx'));
+//const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.tsx'));
 //import UsersPage from './components/Users/UsersContainer.tsx';
 //const UsersPage = React.lazy(() => import('./components/Users/UsersContainer.tsx'));
 
@@ -55,7 +56,7 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
               <Routes>
                 <Route path='/' element={<Navigate to="/profile" />} />
                 <Route path='/dialogs/*' element={<DialogsContainer />} />
-                <Route path='/profile/:profileId?' element={<ProfileContainer />} />
+                <Route path='/profile/:profileId?' element={<ProfilePage />} />
                 <Route path='/users' element={<UsersPage pageTitle={"Самурай"} />} />
                 <Route path='/news' element={<News />} />
                 <Route path='/music' element={<Music />} />

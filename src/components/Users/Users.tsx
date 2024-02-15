@@ -6,6 +6,7 @@ import { FilterType, actions, getUsers } from "../../redux/users-reducer.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersFilter, getUsersSelector } from "../../redux/users-selectors.ts";
 import { AppDispatch } from "../../redux/redux-store.ts";
+import { useNavigate } from "react-router-dom";
 
 type PropsType = {}
 
@@ -21,14 +22,41 @@ export const Users: FC<PropsType> = (props) => {
     //настраиваю диспатчи
     const dispatch: AppDispatch = useDispatch();
 
+    //вытаскивание данных из адресной строки
+    const navigate = useNavigate();
+
     //аналог componentDidMount и выполнится 1 раз при создании
+    //беру из урла начальные значения и записываю в стейт
     useEffect(() => {
-        dispatch(getUsers(currentPage, pageSize, filter));
-    }, [])
+        let location = window.location.href;
+        location = location.replace('#', '/');
+        let url = new URL(location);
+        let urlParamTerm = url.searchParams.get('term')
+        let urlParamFriend = url.searchParams.get('friend')
+        let urlParamCurrentPage = url.searchParams.get('page')
+
+        let newCurrentPage = currentPage;
+        let newFilter = filter;
+        if (urlParamCurrentPage) {
+            newCurrentPage = Number(urlParamCurrentPage);
+        }
+        if (urlParamTerm) {
+            newFilter = { ...newFilter, term: urlParamTerm as string };
+        }
+        if (urlParamFriend) {
+            newFilter = { ...newFilter, friend: urlParamFriend === "null" ? null : urlParamFriend === "true" ? true : false };
+        }
+
+        dispatch(getUsers(newCurrentPage, pageSize, newFilter));
+    }, []);
+
+    //подставляем в браузер гет-параметры(синхронизация)
+    useEffect(() => {
+        navigate(`/users?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`);
+    }, [filter, currentPage]);
 
     const onPageChanged = (currentPage: number) => {
         dispatch(getUsers(currentPage, pageSize, filter));
-        dispatch(actions.setCurrentPage(currentPage));
     }
     const onFilterChanged = (filter: FilterType) => {
         dispatch(getUsers(1, pageSize, filter));

@@ -7,24 +7,29 @@ import ProfileStatusWithHooks from './ProfileStatusWithHooks.tsx';
 import { useState } from 'react';
 import ProfileDataForm from './ProfileDataForm.tsx';
 import Contact from './Contact.tsx';
-import { AppStateType } from '../../../redux/redux-store.ts';
+import { AppDispatch, AppStateType } from '../../../redux/redux-store.ts';
 import { ProfileType } from '../../../types/types.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { savePhoto, saveProfile, updateStatus } from '../../../redux/profile-reducer.ts';
+import { useParams } from 'react-router-dom';
 
-type PropsType = {
-  profile: AppStateType["profilePage"]["profile"] | null
-  isOwner: boolean
-  status: string
-  savePhoto: (file: File) => void
-  saveProfile: (profileData: ProfileType) => void
-  updateStatus: (status: string) => void
-}
+type PropsType = {}
 const ProfileInfo: React.FC<PropsType> = (props) => {
   let [editMode, setEditMode] = useState(false); //хук переключатель режима редактирования данных пользователя
 
-  const onSubmit = (formData) => {
-    props.saveProfile(formData)
+  const profile = useSelector((state: AppStateType) => state.profilePage.profile);
+  const status = useSelector((state: AppStateType) => state.profilePage.status);
+
+  //получаю ид текущего пользователя из урла
+  const paramsUrl = useParams();
+  const isOwner = Boolean(!paramsUrl.profileId);
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const onSubmit = (formData: ProfileType) => {
+    dispatch(saveProfile(formData))
       .then((result) => {
-        if (result != false) {
+        if (result !== false) {
           setEditMode(false);
         }
       });
@@ -32,11 +37,11 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
 
   const onMainPhotoSelected = (e) => {
     if (e.target.files.length) {
-      props.savePhoto(e.target.files[0]);
+      dispatch(savePhoto(e.target.files[0]));
     }
   }
 
-  if (!props.profile) {
+  if (!profile) {
     return <Preloader />;
   }
 
@@ -44,15 +49,15 @@ const ProfileInfo: React.FC<PropsType> = (props) => {
     <div>
       <div className={s.descriptionBlock}>
         <div className={s.profileAvatar}>
-          <img src={props.profile.photos.large
-            ? props.profile.photos.large
+          <img src={profile.photos.large
+            ? profile.photos.large
             : defaultAvatar} />
-          {props.isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
+          {isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
         </div>
         {//переключатель режима редактирования данных пользователя
           editMode
-            ? <ProfileDataForm initialValues={props.profile} profile={props.profile} onSubmit={onSubmit} />
-            : <ProfileData profile={props.profile} status={props.status} updateStatus={props.updateStatus} isOwner={props.isOwner} goToEditMode={() => { setEditMode(true) }} />}
+            ? <ProfileDataForm initialValues={profile} profile={profile} onSubmit={onSubmit} />
+            : <ProfileData profile={profile} status={status} updateStatus={() => { dispatch(updateStatus(status)) }} isOwner={isOwner} goToEditMode={() => { setEditMode(true) }} />}
 
       </div>
     </div>
