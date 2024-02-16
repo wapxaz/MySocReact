@@ -14,3 +14,7 @@
   grid-area: c;
   background-color: rgb(120, 120, 172);
 }
+.demo-logo img {
+  max-width: 50px;
+  padding-top: 8px;
+}
