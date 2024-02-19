@@ -1,5 +1,4 @@
 import './App.css';
-import Navbar from './components/Navbar/Navbar.tsx';
 import News from './components/News/News.tsx';
 import Music from './components/Music/Music.tsx';
 import Settings from './components/Settings/Settings.tsx';
@@ -12,11 +11,12 @@ import Preloader from './components/common/Preloader/Preloader.tsx';
 import { AppDispatch, AppStateType } from './redux/redux-store.ts';
 import { UsersPage } from './components/Users/UsersContainer.tsx';
 import { ProfilePage } from './components/Profile/ProfileContainer.tsx';
-import { MessageOutlined, DesktopOutlined, UserOutlined, ControlOutlined, CustomerServiceOutlined, ReadOutlined } from '@ant-design/icons';
+import { MessageOutlined, DesktopOutlined, UserOutlined, ControlOutlined, CustomerServiceOutlined, ReadOutlined, WechatOutlined } from '@ant-design/icons';
 import type { GetProp, MenuProps } from 'antd';
 import { Col, Layout, Menu, Row, theme } from 'antd';
 import Block3FriendsContainer from './components/Navbar/Block3Friends/Block3FriendsContainer.tsx';
 import { Header } from './components/Header/Header.tsx';
+//import { ChatPage } from './components/pages/ChatPage.tsx';
 
 const { Content, Footer, Sider } = Layout;
 
@@ -55,6 +55,11 @@ const itemsLeftMenu: MenuItem[] = [
     <DesktopOutlined />,
   ),
   getItem(
+    <Link to="/chat">Chat</Link>,
+    'chat',
+    <WechatOutlined />,
+  ),
+  getItem(
     <Link to="/news">News</Link>,
     'news',
     <ReadOutlined />,
@@ -74,6 +79,7 @@ const itemsLeftMenu: MenuItem[] = [
 //ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
 //import DialogsContainer from './components/Dialogs/DialogsContainer.tsx';
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer.tsx'));
+const ChatPage = React.lazy(() => import('./components/pages/Chat/ChatPage.tsx'));
 //import ProfileContainer from './components/Profile/ProfileContainer.tsx';
 //const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.tsx'));
 //import UsersPage from './components/Users/UsersContainer.tsx';
@@ -145,6 +151,7 @@ const App: React.FC = () => {
                   <Route path='/music' element={<Music />} />
                   <Route path='/settings' element={<Settings />} />
                   <Route path='/login' element={<LoginPage />} />
+                  <Route path='/chat' element={<ChatPage />} />
                   <Route path='*' element={<div>404 NOT FOUND</div>} />
                 </Routes>
               </Suspense>
@@ -155,28 +162,6 @@ const App: React.FC = () => {
           Sukaloff ©{new Date().getFullYear()} Created by Sukalov E.V.
         </Footer>
       </Layout>
-
-      /*
-          <div className='app-wrapper'>
-            <HeaderContainer />
-            <Navbar />
-            <div className='app-wrapper-content'>
-              <Suspense fallback={<div><Preloader /></div>}>
-                <Routes>
-                  <Route path='/' element={<Navigate to="/profile" />} />
-                  <Route path='/dialogs/*' element={<DialogsContainer />} />
-                  <Route path='/profile/:profileId?' element={<ProfilePage />} />
-                  <Route path='/users' element={<UsersPage pageTitle={"Самурай"} />} />
-                  <Route path='/news' element={<News />} />
-                  <Route path='/music' element={<Music />} />
-                  <Route path='/settings' element={<Settings />} />
-                  <Route path='/login' element={<LoginPage />} />
-                  <Route path='*' element={<div>404 NOT FOUND</div>} />
-                </Routes>
-              </Suspense>
-            </div>
-          </div>
-          */
     );
   }
 }
