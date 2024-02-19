@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import Paginator from "../common/Paginator/Paginator.tsx";
 import User from "./User.tsx";
 import UsersSearchForm from "./UsersSearchForm.tsx";
-import { FilterType, actions, getUsers } from "../../redux/users-reducer.ts";
+import { FilterType, actions, getUsers, follow, unfollow } from "../../redux/users-reducer.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentPage, getFollowingInProgress, getPageSize, getTotalUsersCount, getUsersFilter, getUsersSelector } from "../../redux/users-selectors.ts";
 import { AppDispatch } from "../../redux/redux-store.ts";
@@ -61,11 +61,11 @@ export const Users: FC<PropsType> = (props) => {
     const onFilterChanged = (filter: FilterType) => {
         dispatch(getUsers(1, pageSize, filter));
     }
-    const follow = (userId: number) => {
-        dispatch(actions.followSuccess(userId));
+    const followUser = (userId: number) => {
+        dispatch(follow(userId));
     }
-    const unfollow = (userId: number) => {
-        dispatch(actions.unfollowSuccess(userId));
+    const unfollowUser = (userId: number) => {
+        dispatch(unfollow(userId));
     }
 
     return (
@@ -80,8 +80,8 @@ export const Users: FC<PropsType> = (props) => {
                 {
                     users.map(u => <User key={u.id}
                         user={u}
-                        followingInProgress={followingInProgress} unfollow={unfollow}
-                        follow={follow} />)
+                        followingInProgress={followingInProgress} unfollow={unfollowUser}
+                        follow={followUser} />)
                 }
             </div>
         </div>
