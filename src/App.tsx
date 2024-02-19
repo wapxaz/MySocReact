@@ -18,6 +18,19 @@ import Block3FriendsContainer from './components/Navbar/Block3Friends/Block3Frie
 import { Header } from './components/Header/Header.tsx';
 //import { ChatPage } from './components/pages/ChatPage.tsx';
 
+//ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
+//import DialogsContainer from './components/Dialogs/DialogsContainer.tsx';
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer.tsx'));
+const ChatPage = React.lazy(() => import('./components/pages/Chat/ChatPage.tsx'));
+//import ProfileContainer from './components/Profile/ProfileContainer.tsx';
+//const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.tsx'));
+//import UsersPage from './components/Users/UsersContainer.tsx';
+//const UsersPage = React.lazy(() => import('./components/Users/UsersContainer.tsx'));
+
+
+
+
+
 const { Content, Footer, Sider } = Layout;
 
 type MenuItem = GetProp<MenuProps, 'items'>[number];
@@ -76,16 +89,6 @@ const itemsLeftMenu: MenuItem[] = [
   ),
 ];
 
-//ленивая подгрузка js для страниц ниже(ускоряет загрузку всего приложения и подгружает файлы по мере необходимости)
-//import DialogsContainer from './components/Dialogs/DialogsContainer.tsx';
-const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer.tsx'));
-const ChatPage = React.lazy(() => import('./components/pages/Chat/ChatPage.tsx'));
-//import ProfileContainer from './components/Profile/ProfileContainer.tsx';
-//const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer.tsx'));
-//import UsersPage from './components/Users/UsersContainer.tsx';
-//const UsersPage = React.lazy(() => import('./components/Users/UsersContainer.tsx'));
-
-
 
 const App: React.FC = () => {
   const {
@@ -133,7 +136,7 @@ const App: React.FC = () => {
                 // style={{ height: '80%' }}
                 items={itemsLeftMenu}
               />
-              <Row style={{padding: "15px"}}>
+              <Row style={{ padding: "15px" }}>
                 <Row><h4>Friends</h4></Row>
                 <Row>
                   <Block3FriendsContainer />
